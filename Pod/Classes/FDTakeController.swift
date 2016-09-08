@@ -20,7 +20,7 @@ public class FDTakeController: NSObject /* , UIImagePickerControllerDelegate, UI
     }
 
     /// Convenience method for getting a photo
-    public class func getPhotoWithCallback(getPhotoWithCallback callback: (photo: UIImage, info: [NSObject : AnyObject]) -> Void) {
+    public class func getPhotoWithCallback(getPhotoWithCallback callback: (UIImage, [NSObject : AnyObject]) -> Void) {
         let fdTake = FDTakeController()
         fdTake.allowsVideo = false
         fdTake.didGetPhoto = callback
@@ -28,7 +28,7 @@ public class FDTakeController: NSObject /* , UIImagePickerControllerDelegate, UI
     }
 
     /// Convenience method for getting a video
-    public class func getVideoWithCallback(getVideoWithCallback callback: (video: NSURL, info: [NSObject : AnyObject]) -> Void) {
+    public class func getVideoWithCallback(getVideoWithCallback callback: (NSURL, [NSObject : AnyObject]) -> Void) {
         let fdTake = FDTakeController()
         fdTake.allowsPhoto = false
         fdTake.didGetVideo = callback
@@ -80,10 +80,10 @@ public class FDTakeController: NSObject /* , UIImagePickerControllerDelegate, UI
     // MARK: - Callbacks
 
     /// A photo was selected
-    public var didGetPhoto: ((photo: UIImage, info: [NSObject : AnyObject]) -> Void)?
+    public var didGetPhoto: ((UIImage, [NSObject : AnyObject]) -> Void)?
 
     /// A video was selected
-    public var didGetVideo: ((video: NSURL, info: [NSObject : AnyObject]) -> Void)?
+    public var didGetVideo: ((NSURL, [NSObject : AnyObject]) -> Void)?
 
     /// The user selected did not attempt to select a photo
     public var didDeny: (() -> Void)?
@@ -169,7 +169,7 @@ public class FDTakeController: NSObject /* , UIImagePickerControllerDelegate, UI
     // MARK: - Localization
 
     private func localize(key: String, comment: String) -> String {
-        return NSLocalizedString(key, tableName: nil, bundle: NSBundle(URL: NSBundle(forClass: self.dynamicType).resourceURL!.URLByAppendingPathComponent("FDTake.bundle")!)!, value: key, comment: comment)
+        return NSLocalizedString(key, tableName: nil, bundle: NSBundle(URL: NSBundle(forClass: FDTakeController.self).resourceURL!.URLByAppendingPathComponent("FDTake.bundle")!)!, value: key, comment: comment)
     }
 
     private func textForButtonWithTitle(title: String) -> String {
@@ -315,12 +315,12 @@ extension FDTakeController : UIImagePickerControllerDelegate, UINavigationContro
                 self.didCancel?()
                 return
             }
-            self.didGetPhoto?(photo: imageToSave, info: info)
+            self.didGetPhoto?(imageToSave, info)
             if UI_USER_INTERFACE_IDIOM() == .Pad {
                 self.popover.dismissPopoverAnimated(true)
             }
         } else if mediaType == kUTTypeMovie as String {
-            self.didGetVideo?(video: info[UIImagePickerControllerMediaURL] as! NSURL, info: info)
+            self.didGetVideo?(info[UIImagePickerControllerMediaURL] as! NSURL, info)
         }
 
         picker.dismissViewControllerAnimated(true, completion: nil)

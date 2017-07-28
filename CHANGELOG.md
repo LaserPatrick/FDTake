@@ -4,7 +4,58 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Master](https://github.com/fulldecent/FDBarGuage/compare/0.3.3...master)
+## [Master](https://github.com/fulldecent/FDBarGuage/compare/1.0.0...master)
+
+#### KNOWN ISSUES
+- Localization is broken, discuss at https://github.com/fulldecent/FDTake/pull/99
+
+---
+
+## [1.0.0](https://github.com/fulldecent/FDBarGuage/releases/tag/1.0.0)
+Released on 2016-09-28.
+
+Release 1.0 because this is already used in a lot of places. It's time.
+
+---
+
+## [0.4.2](https://github.com/fulldecent/FDBarGuage/releases/tag/0.4.2)
+Released on 2016-09-17.
+
+Version bump to trigger CocoaPods quality check
+
+---
+
+## [0.4.1](https://github.com/fulldecent/FDBarGuage/releases/tag/0.4.1)
+Released on 2016-09-17.
+
+#### Added
+- Support for Swift Package Manager
+  - Added by [William Entriken](https://github.com/fulldecent) in regards to issue
+  [#87](https://github.com/fulldecent/FDBarGuage/issues/87).
+- Test cases
+  - Added by [William Entriken](https://github.com/fulldecent) in regards to issue
+  [#72](https://github.com/fulldecent/FDBarGuage/issues/72).
+
+#### KNOWN ISSUES
+- Localization is broken, discuss at https://github.com/fulldecent/FDTake/pull/99
+
+---
+
+## [0.4.0](https://github.com/fulldecent/FDBarGuage/releases/tag/0.4.0)
+Released on 2016-09-17.
+
+#### Added
+- Automated CocoaPods Quality Indexes testing
+  - Added by [Hayden Holligan](https://github.com/haydenholligan) in regards to issue
+  [#95](https://github.com/fulldecent/FDTake/issues/95).
+
+#### Changed
+- Updated to Swift 3
+  - Added by [Anthony Miller](https://github.com/AnthonyMDev) and [William Entriken](https://github.com/fulldecent) in regards to issue
+  [#98](https://github.com/fulldecent/FDTake/issues/98).
+
+#### KNOWN ISSUES
+- Localization is broken, discuss at https://github.com/fulldecent/FDTake/pull/99
 
 ---
 

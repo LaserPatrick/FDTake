@@ -1,6 +1,6 @@
 # FDTake
 
-[![CI Status](http://img.shields.io/travis/fulldecent/FDTake.svg?style=flat)](https://travis-ci.org/William Entriken/FDTake)
+[![CI Status](http://img.shields.io/travis/fulldecent/FDTake.svg?style=flat)](https://travis-ci.org/fulldecent/FDTake)
 [![Version](https://img.shields.io/cocoapods/v/FDTake.svg?style=flat)](http://cocoapods.org/pods/FDTake)
 [![License](https://img.shields.io/cocoapods/l/FDTake.svg?style=flat)](http://cocoapods.org/pods/FDTake)
 [![Platform](https://img.shields.io/cocoapods/p/FDTake.svg?style=flat)](http://cocoapods.org/pods/FDTake)
@@ -13,8 +13,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 To use it in your project, add an `FDTakeController` to your view controller and implement:
 
-    fdTakeController.gotPhoto = {
-        ...
+    fdTakeController.didGetPhoto = {
+        (_ photo: UIImage, _ info: [AnyHashable : Any]) in
     }
 
 then call:
@@ -28,85 +28,85 @@ The full API is:
 public override init()
 
 /// Convenience method for getting a photo
-public class func getPhotoWithCallback(getPhotoWithCallback callback: (photo: UIImage, info: [NSObject : AnyObject]) -> Void)
+open class func getPhotoWithCallback(getPhotoWithCallback callback: @escaping (_ photo: UIImage, _ info: [AnyHashable : Any]) -> Void) -> <<error type>>
 
 /// Convenience method for getting a video
-public class func getVideoWithCallback(getVideoWithCallback callback: (video: NSURL, info: [NSObject : AnyObject]) -> Void)
+open class func getVideoWithCallback(getVideoWithCallback callback: @escaping (_ video: URL, _ info: [AnyHashable : Any]) -> Void)
 
 /// Whether to allow selecting a photo
-public var allowsPhoto: Bool
+open var allowsPhoto: Bool
 
 /// Whether to allow selecting a video
-public var allowsVideo: Bool
+open var allowsVideo: Bool
 
 /// Whether to allow capturing a photo/video with the camera
-public var allowsTake: Bool
+open var allowsTake: Bool
 
 /// Whether to allow selecting existing media
-public var allowsSelectFromLibrary: Bool
+open var allowsSelectFromLibrary: Bool
 
 /// Whether to allow editing the media after capturing/selection
-public var allowsEditing: Bool
+open var allowsEditing: Bool
 
 /// Whether to use full screen camera preview on the iPad
-public var iPadUsesFullScreenCamera: Bool
+open var iPadUsesFullScreenCamera: Bool
 
 /// Enable selfie mode by default
-public var defaultsToFrontCamera: Bool
+open var defaultsToFrontCamera: Bool
 
 /// The UIBarButtonItem to present from (may be replaced by a overloaded methods)
-public var presentingBarButtonItem: UIBarButtonItem?
+open var presentingBarButtonItem: UIBarButtonItem?
 
 /// The UIView to present from (may be replaced by a overloaded methods)
-public var presentingView: UIView?
+open var presentingView: UIView?
 
 /// The UIRect to present from (may be replaced by a overloaded methods)
-public var presentingRect: CGRect?
+open var presentingRect: CGRect?
 
 /// The UITabBar to present from (may be replaced by a overloaded methods)
-public var presentingTabBar: UITabBar?
+open var presentingTabBar: UITabBar?
 
 /// The UIViewController to present from (may be replaced by a overloaded methods)
-public lazy var presentingViewController: UIViewController { get set }
+open lazy var presentingViewController: UIViewController { get set }
 
 /// A photo was selected
-public var didGetPhoto: ((photo: UIImage, info: [NSObject : AnyObject]) -> Void)?
+open var didGetPhoto: ((_ photo: UIImage, _ info: [AnyHashable : Any]) -> Void)?
 
 /// A video was selected
-public var didGetVideo: ((video: NSURL, info: [NSObject : AnyObject]) -> Void)?
+open var didGetVideo: ((_ video: URL, _ info: [AnyHashable : Any]) -> Void)?
 
 /// The user selected did not attempt to select a photo
-public var didDeny: (() -> Void)?
+open var didDeny: (() -> Void)?
 
 /// The user started selecting a photo or took a photo and then hit cancel
-public var didCancel: (() -> Void)?
+open var didCancel: (() -> Void)?
 
 /// A photo or video was selected but the ImagePicker had NIL for EditedImage and OriginalImage
-public var didFail: (() -> Void)?
+open var didFail: (() -> Void)?
 
 /// Custom UI text (skips localization)
-public var takePhotoText: String?
+open var cancelText: String?
 
 /// Custom UI text (skips localization)
-public var takeVideoText: String?
+open var chooseFromLibraryText: String?
 
 /// Custom UI text (skips localization)
-public var chooseFromLibraryText: String?
+open var chooseFromPhotoRollText: String?
 
 /// Custom UI text (skips localization)
-public var chooseFromPhotoRollText: String?
+open var noSourcesText: String?
 
 /// Custom UI text (skips localization)
-public var cancelText: String?
+open var takePhotoText: String?
 
 /// Custom UI text (skips localization)
-public var noSourcesText: String?
+open var takeVideoText: String?
 
 /// Presents the user with an option to take a photo or choose a photo from the library
-public func present()
+open func present()
 
 /// Dismisses the displayed view. Especially handy if the sheet is displayed while suspending the app,
-public func dismiss()
+open func dismiss()
 ```
 
 Other available options are documented at <a href="http://cocoadocs.org/docsets/FDTake/">CocoaDocs for FDTake</a>.
@@ -173,3 +173,7 @@ William Entriken, github.com@phor.net
 ## License
 
 FDTake is available under the MIT license. See the LICENSE file for more info.
+
+## Contributing
+
+This project's layout is based on https://github.com/fulldecent/swift3-module-template If you would like to change the layout, please change that project FIRST. Also you may appreciate that project has "recipes" -- you don't just change code you explain why you are doing things. As a maintainer this makes my job MUCH simpler. In a similar respect, if you are introducing non-minor changes, it will be VERY helpful if you could please reference to another project (like AlamoFire) that has seen and discussed the types of design challenges you are touching.) Thanks again and we all really do appreciate your contributions.

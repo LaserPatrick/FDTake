@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "FDTake"
-  s.version      = "0.3.3"
+  s.version      = "1.0.0"
   s.summary      = "Easily take a photo or video or choose from library"
   s.description  = <<-DESC
                    `FDTake` helps you quickly have the user take or choose an existing photo or video.
@@ -14,8 +14,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'FDTake' => ['Pod/*.lproj']
-  }
+  s.source_files = 'Source/**/*'
 end

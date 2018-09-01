@@ -9,6 +9,20 @@ import Foundation
 import MobileCoreServices
 import UIKit
 
+#if swift(>=4.2)
+fileprivate let windowLevelAlert = UIWindow.Level.alert
+fileprivate let pickerControllerMediaType = UIImagePickerController.InfoKey.mediaType.rawValue
+fileprivate let pickerControllerEditedImage = UIImagePickerController.InfoKey.editedImage.rawValue
+fileprivate let pickerControllerOriginalImage = UIImagePickerController.InfoKey.originalImage.rawValue
+fileprivate let pickerControllerMediaURL = UIImagePickerController.InfoKey.mediaURL.rawValue
+#else
+fileprivate let windowLevelAlert = UIWindowLevelAlert
+fileprivate let pickerControllerMediaType = UIImagePickerControllerMediaType
+fileprivate let pickerControllerEditedImage = UIImagePickerControllerEditedImage
+fileprivate let pickerControllerOriginalImage = UIImagePickerControllerOriginalImage
+fileprivate let pickerControllerMediaURL = UIImagePickerControllerMediaURL
+#endif
+
 /// User interface strings
 fileprivate enum FDTakeControllerLocalizableStrings: String {
     /// Decline to proceed with operation
@@ -219,8 +233,12 @@ open class FDTakeController: NSObject /* , UIImagePickerControllerDelegate, UINa
     /// Presents the user with an option to take a photo or choose a photo from the library
     open func present() {
         //TODO: maybe encapsulate source selection?
+        
+        #if swift(>=4.2)
+        var titleToSource = [(buttonTitle: FDTakeControllerLocalizableStrings, source: UIImagePickerController.SourceType)]()
+        #else
         var titleToSource = [(buttonTitle: FDTakeControllerLocalizableStrings, source: UIImagePickerControllerSourceType)]()
-
+        #endif
         if self.allowsTake && UIImagePickerController.isSourceTypeAvailable(.camera) {
             if self.allowsPhoto {
                 titleToSource.append((buttonTitle: .takePhoto, source: .camera))
@@ -248,7 +266,7 @@ open class FDTakeController: NSObject /* , UIImagePickerControllerDelegate, UINa
             // http://stackoverflow.com/a/34487871/300224
             let alertWindow = UIWindow(frame: UIScreen.main.bounds)
             alertWindow.rootViewController = UIViewController()
-            alertWindow.windowLevel = UIWindowLevelAlert + 1;
+            alertWindow.windowLevel = windowLevelAlert + 1;
             alertWindow.makeKeyAndVisible()
             alertWindow.rootViewController?.present(alert, animated: true, completion: nil)
             return
@@ -325,13 +343,13 @@ extension FDTakeController : UIImagePickerControllerDelegate, UINavigationContro
     /// Conformance for ImagePicker delegate
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         UIApplication.shared.isStatusBarHidden = true
-        let mediaType: String = info[UIImagePickerControllerMediaType] as! String
+        let mediaType: String = info[pickerControllerMediaType] as! String
         var imageToSave: UIImage
         // Handle a still image capture
         if mediaType == kUTTypeImage as String {
-            if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            if let editedImage = info[pickerControllerEditedImage] as? UIImage {
                 imageToSave = editedImage
-            } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            } else if let originalImage = info[pickerControllerOriginalImage] as? UIImage {
                 imageToSave = originalImage
             } else {
                 self.didCancel?()
@@ -342,7 +360,7 @@ extension FDTakeController : UIImagePickerControllerDelegate, UINavigationContro
                 self.popover.dismiss(animated: true)
             }
         } else if mediaType == kUTTypeMovie as String {
-            self.didGetVideo?(info[UIImagePickerControllerMediaURL] as! URL, info)
+            self.didGetVideo?(info[pickerControllerMediaURL] as! URL, info)
         }
 
         picker.dismiss(animated: true, completion: nil)
